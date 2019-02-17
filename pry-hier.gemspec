@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   EOS
   s.authors     = ['Paul Sonkoly']
   s.email       = 'sonkoly.pal@gmail.com'
-  s.files       = ["lib/pry_hier.rb"]
+  s.files       = ["lib/pry-hier.rb"]
   s.homepage    = 'http://github.com/phaul/pry-hier'
   s.license     = 'MIT'
 end
