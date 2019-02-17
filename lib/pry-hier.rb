@@ -1,33 +1,39 @@
 require 'pry'
 require 'tty-tree'
 
-Pry::Commands.create_command 'hier' do
-  description 'Shows descendants of a class: hier [Class|Module]'
+class Pry
+  Commands.create_command 'hier' do
+    description 'Shows descendants of a class: hier [Class|Module]'
 
-  def process
-    blah(eval(args[0]))
+    def process
+      klass = WrappedModule.from_str(args[0])
+      raise ArgumentError unless klass
+      print_tree_for(klass.wrapped)
+    end
+
+    private
+
+    def print_tree_for(klass)
+      output.print TTY::Tree.new(hash_for(klass)).render
+    end
+
+    def hash_for(klass)
+      children = children_of(klass).map(&method(:hash_for))
+      colour_name(klass) do |name|
+        children.empty? ? name : { name => children }
+      end
+    end
+
+    def children_of(klass)
+      ObjectSpace.each_object.select do |obj|
+        obj.respond_to?(:superclass) && obj.superclass == klass
+      end
+    end
+
+    def colour_name(klass)
+      yield(Pry.config.color ? colorize_code(klass) : klass.name)
+    end
   end
-
-  private
-
-  def blah(klass=Exception)
-    @errors = ObjectSpace.each_object.select do |obj|
-      obj.is_a?(Class) && obj.ancestors.include?(klass)
-    end
-
-    def children_of(error)
-      @errors.select { |other| other.superclass == error }.sort_by(&:to_s)
-    end
-
-    def hashize(error)
-      children = children_of(error).map(&method(:hashize))
-      children.empty? ? error : { error => children }
-    end
-
-    pry
-    output.print TTY::Tree.new(hashize(klass)).render
-  end
-
 end
 
 require 'pry'; binding.pry
