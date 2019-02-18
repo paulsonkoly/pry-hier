@@ -11,27 +11,41 @@ class Pry
       print_tree_for(klass.wrapped)
     end
 
+    def options(opt)
+      opt.on :s, :include_singletons, 'Include singleton classes'
+    end
+
     private
 
     def print_tree_for(klass)
-      output.print TTY::Tree.new(hash_for(klass)).render
+      set_class_list(klass)
+      tree = hash_for(klass)
+      case tree
+      when Hash then output.print TTY::Tree.new(hash_for(klass)).render
+      else output.puts colour_name(klass)
+      end
     end
 
     def hash_for(klass)
       children = children_of(klass).map(&method(:hash_for))
-      colour_name(klass) do |name|
+      colour_name(klass).yield_self do |name|
         children.empty? ? name : { name => children }
       end
     end
 
     def children_of(klass)
-      ObjectSpace.each_object.select do |obj|
-        obj.respond_to?(:superclass) && obj.superclass == klass
-      end
+      @classes.select { |obj| obj.superclass == klass }
     end
 
     def colour_name(klass)
-      yield(Pry.config.color ? colorize_code(klass) : klass.name)
+      Pry.config.color ? colorize_code(klass) : klass.name
+    end
+
+    def set_class_list(klass)
+      @classes = ObjectSpace.each_object.select do |obj|
+        obj.is_a?(Class) &&
+          (opts.include_singletons? || ! obj.singleton_class?)
+      end
     end
   end
 end
