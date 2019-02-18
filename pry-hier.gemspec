@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'pry-hier'
-  s.version     = '0.0.0'
+  s.version     = '0.1.0'
   s.date        = '2019-02-17'
   s.summary     = 'Shows an ascii art tree of the descendants of a class.'
   s.description = <<~EOS
