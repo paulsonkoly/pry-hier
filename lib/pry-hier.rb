@@ -49,5 +49,3 @@ class Pry
     end
   end
 end
-
-require 'pry'; binding.pry
