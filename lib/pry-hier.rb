@@ -38,7 +38,7 @@ class Pry
     end
 
     def colour_name(klass)
-      Pry.config.color ? colorize_code(klass) : klass.name
+      Pry.config.color ? colorize_code(klass) : klass.inspect
     end
 
     def set_class_list(klass)
