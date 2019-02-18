@@ -15,4 +15,5 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
   s.add_runtime_dependency 'pry', '~> 0.12'
   s.add_runtime_dependency 'tty-tree', '~> 0.2'
+  s.add_development_dependency 'rspec', '~> 3.8'
 end
