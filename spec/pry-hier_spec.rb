@@ -1,4 +1,3 @@
-require 'deep-cover'
 require 'pry-hier'
 
 RSpec.describe Pry::Commands['hier'] do
