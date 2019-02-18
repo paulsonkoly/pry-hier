@@ -6,15 +6,6 @@ Gem::Specification.new do |s|
   s.description = <<~EOS
   Given an class or module name hier command shows an ascii tree (similar to
   the tree shell command) of the descendants of the given class.
-
-  at pry prompt:
-
-    [0](main) λ hier Numeric
-    Numeric
-    ├── Complex
-    ├── Rational
-    ├── Float
-    └── Integer
   EOS
   s.authors     = ['Paul Sonkoly']
   s.email       = 'sonkoly.pal@gmail.com'
