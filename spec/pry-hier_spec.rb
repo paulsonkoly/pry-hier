@@ -10,6 +10,10 @@ RSpec.describe Pry::Commands['hier'] do
     end
   end
 
+  let(:bad_command) do
+    subject.tap { |cmd| cmd.args = ['xxx'] }
+  end
+
   before do
     Pry.config.color = false
   end
@@ -24,6 +28,10 @@ Numeric
 ├── Float
 └── Integer
 EOS
+  end
+
+  it 'raises exception for something that\'s not a class' do
+    expect { bad_command.process }.to raise_error Pry::CommandError
   end
 
   context 'with colours' do

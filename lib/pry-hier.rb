@@ -7,7 +7,7 @@ class Pry
 
     def process
       klass = WrappedModule.from_str(args[0])
-      raise ArgumentError unless klass
+      raise CommandError, 'class or module name required' unless klass
       print_tree_for(klass.wrapped)
     end
 
