@@ -42,9 +42,8 @@ class Pry
     end
 
     def set_class_list(klass)
-      @classes = ObjectSpace.each_object.select do |obj|
-        obj.is_a?(Class) &&
-          (opts.include_singletons? || ! obj.singleton_class?)
+      @classes = ObjectSpace.each_object(Class).select do |obj|
+        opts.include_singletons? || ! obj.singleton_class?
       end
     end
   end
