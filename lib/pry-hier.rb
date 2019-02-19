@@ -21,7 +21,7 @@ class Pry
       set_class_list(klass)
       tree = hash_for(klass)
       case tree
-      when Hash then output.print TTY::Tree.new(hash_for(klass)).render
+      when Hash then output.print TTY::Tree.new(tree).render
       else output.puts colour_name(klass)
       end
     end
