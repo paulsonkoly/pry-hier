@@ -18,7 +18,7 @@ class Pry
     private
 
     def print_tree_for(klass)
-      set_class_list(klass)
+      set_class_list
       tree = hash_for(klass)
       case tree
       when Hash then output.print TTY::Tree.new(tree).render
@@ -41,7 +41,7 @@ class Pry
       Pry.config.color ? colorize_code(klass) : klass.inspect
     end
 
-    def set_class_list(klass)
+    def set_class_list
       @classes = ObjectSpace.each_object(Class).select do |obj|
         opts.include_singletons? || ! obj.singleton_class?
       end
