@@ -1,5 +1,6 @@
 language: ruby
 script: rspec
+install: gem install rspec
 branches:
   only:
     - master
