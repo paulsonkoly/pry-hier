@@ -1,10 +1,9 @@
 language: ruby
-script: rspec
-install:
-  - gem build pry-hier.gemspec
-  - gem install --dev pry-hier*.gem
+script: bundle exec rspec
+cache: bundler
 branches:
   only:
     - master
 before_install:
   - gem update --system
+  - gem install bundler
