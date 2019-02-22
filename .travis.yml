@@ -1,6 +1,8 @@
 language: ruby
 script: rspec
-install: gem install rspec
+install:
+  - gem build pry-hier.gemspec
+  - gem install --dev pry-hier*.gem
 branches:
   only:
     - master
